@@ -1,0 +1,7 @@
+// overlay to my_keyboard.dtsi
+
+/ {
+    split: split {
+        role = "central"; // 左手側をセントラルに設定
+    };
+}
