@@ -1,0 +1,61 @@
+// my_keyboard_name_right.overlay
+
+#include <zephyr/dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+        zmk,split = &split;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+
+        // こちらもご自身の配線に合わせて変更してください (左手側と同じ配線でOK)
+        // XIAOピン: D0, D1, D2, D3
+        col-gpios
+            = <&gpio0 2>
+            , <&gpio0 3>
+            , <&gpio0 28>
+            , <&gpio0 29>
+            , <&gpio0 4>   // D8
+            , <&gpio0 5>   // D9
+            ;
+
+        // XIAOピン: D6, D7, D10, A3
+        row-gpios
+            = <&gpio1 15>
+            , <&gpio1 13>
+            , <&gpio0 10>
+            , <&gpio0 30>
+            ;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <6>;
+        rows = <4>;
+        // 右手側のキーマップ（5列ずらしてマッピング）
+        map = <
+        RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+        RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+        RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+                RC(3,6) RC(3,7)
+        >;
+    };
+
+    split: split {
+        compatible = "zmk,split-i2c";
+        // 右手側はペリフェラル（USBに接続しない側）になる
+        role = "peripheral";
+    };
+
+    // I2C設定 (D4, D5ピンを使用)
+    &i2c0 {
+        status = "okay";
+        sda-pin = <&gpio0 6>;  // D4
+        scl-pin = <&gpio0 7>;  // D5
+    };
+};
