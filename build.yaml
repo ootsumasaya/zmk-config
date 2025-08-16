@@ -20,6 +20,6 @@
 ---
 include:
   - board: seeeduino_xiao_ble # <- ここを指定します
-    shield: my_keyboard_name_left # .confや.keymapの名前に合わせる
+    shield: my_keyboard_left # .confや.keymapの名前に合わせる
   - board: seeeduino_xiao_ble # <- 右手側も同じです
-    shield: my_keyboard_name_right
+    shield: my_keyboard_right
